@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+<!-- 	<bean id="userService"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceUrl"
+			value="http://localhost:8080/v-rmi/remoting/userServiceImpl" />
+		<property name="serviceInterface" value="com.reed.rmi.service.UserService" />
+	</bean> -->
+	<bean id="scanner" class="com.reed.rmi.client.scanner.ClientServiceScanner">
+		<!-- rpc type,0:httpInvoker;1;Hessian -->
+		<property name="proxyType" value="1"></property>
+		<property name="basePackage"
+			value="com.reed.rmi.service"></property>
+		<property name="serviceUrl" value="http://localhost:8080/rmi-demo/remoting"></property>
+	</bean>
+
+</beans>
