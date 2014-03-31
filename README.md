@@ -1,4 +1,3 @@
 rmi-demo
 ========
-
-rpc service demo for httpInvoker and hessian
+Using annotation to do rpc service demo for httpInvoker and hessian
