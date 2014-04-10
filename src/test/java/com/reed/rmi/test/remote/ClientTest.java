@@ -19,11 +19,17 @@ public class ClientTest {
 	public static void main(String[] args) {
 		ApplicationContext applicationContext = new ClassPathXmlApplicationContext(
 				"client.xml");
-
-		UserService service = (UserService) applicationContext
-				.getBean("userService");
-		User u = service.findById(1l);
-		logger.info("============>" + u);
-		logger.info("============>" + service.save(u));
+//		ApplicationContext applicationContext = new ClassPathXmlApplicationContext(
+//				"client-httpinvoker.xml");
+		try {
+			UserService service = (UserService) applicationContext
+					.getBean("userService");
+			User u = service.findById(1l);
+			logger.info("============>" + u);
+			logger.info("============>" + service.save(u));
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error("ex error=======>" + ex.getMessage());
+		}
 	}
 }

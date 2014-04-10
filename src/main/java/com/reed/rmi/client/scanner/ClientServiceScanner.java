@@ -18,10 +18,12 @@ import org.springframework.context.annotation.ScannedGenericBeanDefinition;
 import org.springframework.context.annotation.ScopeMetadata;
 import org.springframework.remoting.caucho.HessianProxyFactoryBean;
 import org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean;
+import org.springframework.remoting.httpinvoker.HttpInvokerRequestExecutor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import com.reed.rmi.base.BaseScanner;
+import com.reed.rmi.base.HessianConnectionFactoryByTimeout;
 
 /**
  * 自动扫描指定包下被@service注解过的类，作为httpInvoker远程服务的客户端调用， 以接口名（首字母小写）作为bean
@@ -41,9 +43,43 @@ public class ClientServiceScanner implements BeanFactoryPostProcessor,
 	private String serviceUrl;
 	/** 定义remote service 的 bean name的注解名 */
 	private String rpcBeanNameAnnotation;
+	/**
+	 * hessian read timeout:out of this time client socket connection will be
+	 * closed
+	 */
+	private long readTimeout = 5000;
+	/** hessian connect timeout refer to HessianConnectionFactoryByTimeout */
+	private long connectTimeout = 10000;
+	/** httpinvoker httpclient conneciton config */
+	private HttpInvokerRequestExecutor httpInvokerRequestExecutor;
 
 	/** 远程服务代理类型,0:httpInvoker,1:hessian */
 	private String proxyType;
+
+	public long getReadTimeout() {
+		return readTimeout;
+	}
+
+	public void setReadTimeout(long readTimeout) {
+		this.readTimeout = readTimeout;
+	}
+
+	public long getConnectTimeout() {
+		return connectTimeout;
+	}
+
+	public void setConnectTimeout(long connectTimeout) {
+		this.connectTimeout = connectTimeout;
+	}
+
+	public HttpInvokerRequestExecutor getHttpInvokerRequestExecutor() {
+		return httpInvokerRequestExecutor;
+	}
+
+	public void setHttpInvokerRequestExecutor(
+			HttpInvokerRequestExecutor httpInvokerRequestExecutor) {
+		this.httpInvokerRequestExecutor = httpInvokerRequestExecutor;
+	}
 
 	public void setServiceUrl(String serviceUrl) {
 		this.serviceUrl = serviceUrl;
@@ -127,11 +163,25 @@ public class ClientServiceScanner implements BeanFactoryPostProcessor,
 						bd.setBeanClassName(HttpInvokerProxyFactoryBean.class
 								.getName());
 						bd.setBeanClass(HttpInvokerProxyFactoryBean.class);
+						// httpclient connction config
+						if (httpInvokerRequestExecutor != null) {
+							bd.getPropertyValues().add(
+									"httpInvokerRequestExecutor",
+									httpInvokerRequestExecutor);
+						}
 					}
 					if (proxyType.equals(HESSIAN)) {
 						bd.setBeanClassName(HessianProxyFactoryBean.class
 								.getName());
 						bd.setBeanClass(HessianProxyFactoryBean.class);
+						// bd.setBeanClassName(HessianConnectionFactoryByTimeout.class
+						// .getName());
+						// bd.setBeanClass(HessianConnectionFactoryByTimeout.class);
+						// bd.getPropertyValues().add("connectTimeout",
+						// connectTimeout);
+
+						// read timeout
+						bd.getPropertyValues().add("readTimeout", readTimeout);
 					}
 					bd.getPropertyValues().add("serviceUrl", url);
 					String[] interfaces = bd.getMetadata().getInterfaceNames();

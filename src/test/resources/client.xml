@@ -13,6 +13,7 @@
 		<property name="basePackage"
 			value="com.reed.rmi.service"></property>
 		<property name="serviceUrl" value="http://localhost:8080/rmi-demo/remoting"></property>
+		<property name="readTimeout" value="5000"></property>
 	</bean>
 
 </beans>

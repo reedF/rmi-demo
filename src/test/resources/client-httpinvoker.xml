@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<!-- <bean id="userService" class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean"> 
+		<property name="serviceUrl" value="http://localhost:8080/v-rmi/remoting/userServiceImpl" 
+		/> <property name="serviceInterface" value="com.reed.rmi.service.UserService" 
+		/> </bean> -->
+	<bean id="scanner" class="com.reed.rmi.client.scanner.ClientServiceScanner">
+		<!-- rpc type,0:httpInvoker;1;Hessian -->
+		<property name="proxyType" value="0"></property>
+		<property name="basePackage" value="com.reed.rmi.service"></property>
+		<property name="serviceUrl" value="http://localhost:8080/rmi-demo/remoting"></property>
+		<property name="httpInvokerRequestExecutor" ref="httpInvokerRequestExecutor"></property>
+	</bean>
+
+	<bean id="httpInvokerRequestExecutor"
+		class="org.springframework.remoting.httpinvoker.CommonsHttpInvokerRequestExecutor">
+		<property name="httpClient">
+			<bean class="org.apache.commons.httpclient.HttpClient">
+				<property name="httpConnectionManager">
+					<ref bean="multiThreadedHttpConnectionManager" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+	<bean id="multiThreadedHttpConnectionManager"
+		class="org.apache.commons.httpclient.MultiThreadedHttpConnectionManager">
+		<property name="params">
+			<bean
+				class="org.apache.commons.httpclient.params.HttpConnectionManagerParams">
+				<property name="connectionTimeout" value="2000" />
+				<property name="soTimeout" value="5000" />
+				<property name="maxTotalConnections" value="600" />
+				<property name="defaultMaxConnectionsPerHost" value="512" />
+			</bean>
+		</property>
+	</bean>
+
+</beans>
