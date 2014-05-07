@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<!-- Mybatis gengerator config file 
+using plugin in Eclipse to create sqlMaps,DAO and Domains -->
+<generatorConfiguration>
+	<classPathEntry location="D:\tmp\mysql-connector-java-5.1.17.jar" />
+	<context id="context1">
+		<!-- pagination plugin -->
+		<plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin>
+		<plugin type="org.mybatis.generator.plugin.PaginationMysqlPlugin" />
+		<commentGenerator>
+			<!-- 不生成注解信息 -->
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://ip:3306/db" userId="root" password="" />
+
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+
+		<javaModelGenerator targetPackage="com.test.genertor.domain"
+			targetProject="rmi-demo" />
+		<sqlMapGenerator targetPackage="com.test.genertor.mapper"
+			targetProject="rmi-demo" />
+		<javaClientGenerator targetPackage="com.test.genertor.mapper"
+			targetProject="rmi-demo" type="XMLMAPPER" />
+		<table schema="" tableName="test" domainObjectName="TestObj" />
+	</context>
+</generatorConfiguration>
