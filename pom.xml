@@ -16,7 +16,7 @@
 		<dependency>
 			<groupId>com.caucho</groupId>
 			<artifactId>hessian</artifactId>
-			<version>4.0.7</version>
+			<version>4.0.37</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
