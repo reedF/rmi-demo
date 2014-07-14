@@ -6,6 +6,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.reed.rmi.domain.User;
+import com.reed.rmi.service.RemoteVersionService;
 import com.reed.rmi.service.UserService;
 
 public class ClientTest {
@@ -19,12 +20,16 @@ public class ClientTest {
 	public static void main(String[] args) {
 		ApplicationContext applicationContext = new ClassPathXmlApplicationContext(
 				"client.xml");
-//		ApplicationContext applicationContext = new ClassPathXmlApplicationContext(
-//				"client-httpinvoker.xml");
+		// ApplicationContext applicationContext = new
+		// ClassPathXmlApplicationContext(
+		// "client-httpinvoker.xml");
 		try {
 			UserService service = (UserService) applicationContext
 					.getBean("userService");
 			User u = service.findById(1l);
+			RemoteVersionService remoteVersionService = (RemoteVersionService) applicationContext
+					.getBean("remoteVersionService");
+			logger.info("============>" + remoteVersionService.getVersion());
 			logger.info("============>" + u);
 			logger.info("============>" + service.save(u));
 		} catch (Exception ex) {

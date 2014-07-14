@@ -18,5 +18,5 @@
 	<!-- <import resource="spring-props.xml" /> -->
 	<!--====================== AutoWierd ====================== -->
 	<context:component-scan base-package="com.reed.rmi.service" />
-	
+	<context:component-scan base-package="com.reed.rmi.version" />
 </beans>
