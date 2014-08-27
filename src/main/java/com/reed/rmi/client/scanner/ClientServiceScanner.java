@@ -182,6 +182,8 @@ public class ClientServiceScanner implements BeanFactoryPostProcessor,
 
 						// read timeout
 						bd.getPropertyValues().add("readTimeout", readTimeout);
+						//hessian调用支持方法重载 默认false不支持
+						bd.getPropertyValues().add("overloadEnabled", true);
 					}
 					bd.getPropertyValues().add("serviceUrl", url);
 					String[] interfaces = bd.getMetadata().getInterfaceNames();
