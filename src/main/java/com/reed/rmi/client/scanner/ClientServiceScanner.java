@@ -43,11 +43,14 @@ public class ClientServiceScanner implements BeanFactoryPostProcessor,
 	/** 定义remote service 的 bean name的注解名 */
 	private String rpcBeanNameAnnotation;
 	/**
-	 * hessian read timeout:out of this time client socket connection will be
-	 * closed
+	 * hessian read timeout(s):out of this time client socket connection will be
+	 * closed,defult is -1 no time out
 	 */
 	private long readTimeout = 5000;
-	/** hessian connect timeout refer to HessianConnectionFactoryByTimeout */
+	/**
+	 * hessian connect timeout(s) refer to
+	 * HessianConnectionFactoryByTimeout,,defult is -1 no time out
+	 */
 	private long connectTimeout = 10000;
 	/** httpinvoker httpclient conneciton config */
 	private HttpInvokerRequestExecutor httpInvokerRequestExecutor;
@@ -180,7 +183,7 @@ public class ClientServiceScanner implements BeanFactoryPostProcessor,
 						// connect timeout
 						bd.getPropertyValues().add("connectTimeout",
 								connectTimeout);
-						
+
 						// read timeout
 						bd.getPropertyValues().add("readTimeout", readTimeout);
 						// hessian调用支持方法重载 默认false不支持
