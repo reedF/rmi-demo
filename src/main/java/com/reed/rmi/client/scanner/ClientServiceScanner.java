@@ -16,13 +16,13 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ScannedGenericBeanDefinition;
 import org.springframework.context.annotation.ScopeMetadata;
+import org.springframework.remoting.caucho.HessianProxyFactoryBean;
 import org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean;
 import org.springframework.remoting.httpinvoker.HttpInvokerRequestExecutor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import com.reed.rmi.base.BaseScanner;
-import com.reed.rmi.base.MyHessianProxyFactoryBean;
 
 /**
  * 自动扫描指定包下被@service注解过的类，作为httpInvoker远程服务的客户端调用， 以接口名（首字母小写）作为bean
@@ -173,16 +173,16 @@ public class ClientServiceScanner implements BeanFactoryPostProcessor,
 						}
 					}
 					if (proxyType.equals(HESSIAN)) {
-						// bd.setBeanClassName(HessianProxyFactoryBean.class
-						// .getName());
-						// bd.setBeanClass(HessianProxyFactoryBean.class);
-						bd.setBeanClassName(MyHessianProxyFactoryBean.class
+						bd.setBeanClassName(HessianProxyFactoryBean.class
 								.getName());
-						bd.setBeanClass(MyHessianProxyFactoryBean.class);
+						bd.setBeanClass(HessianProxyFactoryBean.class);
+						// bd.setBeanClassName(MyHessianProxyFactoryBean.class
+						// .getName());
+						// bd.setBeanClass(MyHessianProxyFactoryBean.class);
 
 						// connect timeout
-						bd.getPropertyValues().add("connectTimeout",
-								connectTimeout);
+						// bd.getPropertyValues().add("connectTimeout",
+						// connectTimeout);
 
 						// read timeout
 						bd.getPropertyValues().add("readTimeout", readTimeout);
