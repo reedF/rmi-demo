@@ -18,23 +18,30 @@ public class ClientTest {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		ApplicationContext applicationContext = new ClassPathXmlApplicationContext(
-				"client.xml");
-		// ApplicationContext applicationContext = new
-		// ClassPathXmlApplicationContext(
-		// "client-httpinvoker.xml");
-		try {
-			UserService service = (UserService) applicationContext
-					.getBean("userService");
-			User u = service.findById(1l);
-			RemoteVersionService remoteVersionService = (RemoteVersionService) applicationContext
-					.getBean("remoteVersionService");
-			logger.info("============>" + remoteVersionService.getVersion());
-			logger.info("============>" + u);
-			logger.info("============>" + service.save(u));
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error("ex error=======>" + ex.getMessage());
-		}
+		Thread t = new Thread(new Runnable() {
+			public void run() {
+				ApplicationContext applicationContext = new ClassPathXmlApplicationContext(
+						"client.xml");
+				// ApplicationContext applicationContext = new
+				// ClassPathXmlApplicationContext(
+				// "client-httpinvoker.xml");
+				try {
+					UserService service = (UserService) applicationContext
+							.getBean("userService");
+					User u = service.findById(1l);
+					RemoteVersionService remoteVersionService = (RemoteVersionService) applicationContext
+							.getBean("remoteVersionService");
+					logger.info("============>"
+							+ remoteVersionService.getVersion());
+					logger.info("============>" + u);
+					logger.info("============>" + service.save(u));
+					Thread.sleep(Long.MAX_VALUE);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+					logger.error("ex error=======>" + ex.getMessage());
+				}
+			}
+		});
+		t.start();
 	}
 }

@@ -7,6 +7,14 @@
 			value="http://localhost:8080/v-rmi/remoting/userServiceImpl" />
 		<property name="serviceInterface" value="com.reed.rmi.service.UserService" />
 	</bean> -->
+	<bean class="com.reed.rmi.base.AppliactionContextHelper" lazy-init="false"/>
+	
+	<!-- client zk listener -->
+	<bean class="com.reed.rmi.base.ClientZkListener">
+		<property name="useZk" value="false"/>
+		<property name="zkClaster" value="10.1.77.15:2181,10.1.77.16:2181,10.1.77.18:2181"/>
+	</bean>
+	
 	<bean id="scanner" class="com.reed.rmi.client.scanner.ClientServiceScanner">
 		<!-- rpc type,0:httpInvoker;1;Hessian -->
 		<property name="proxyType" value="1"></property>
