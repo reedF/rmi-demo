@@ -2,7 +2,6 @@ package com.reed.rmi.base;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
@@ -13,8 +12,7 @@ import org.springframework.stereotype.Component;
  * 
  */
 @Component
-public class ClientZkListener extends BaseZkListener implements
-		ApplicationListener<ContextRefreshedEvent> {
+public class ClientZkListener extends BaseZkListener {
 
 	/** log */
 	private Logger logger = LoggerFactory.getLogger(ClientZkListener.class);
