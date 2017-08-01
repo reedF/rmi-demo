@@ -107,6 +107,7 @@ public class RpcZkWatcher implements Watcher {
 					}
 				}
 			});
+                        count.await();
 		} catch (Exception e) {
 			logger.error("zk watcher init failed=====>" + e.getMessage());
 		}
